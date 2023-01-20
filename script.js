@@ -1,58 +1,103 @@
-// let content = document.getElementById("content")
-//
-// window.onclick = (event) => {
-// 	console.log("target: " + event.target.nodeName)
-// 	if (event.explicitOriginalTarget.className === 'sound') {
-// 		return
-// 	}
-// 	let content = document.getElementById("content")
-//
-// 	let input = document.createElement("input")
-// 	input.type = "text"
-// 	input.style.top = "" + event.clientY + "px"
-// 	input.style.left = "" + event.clientX + "px"
-// 	input.autofocus = true
-// 	input.className = "sound"
-// 	content.appendChild(input)
-// 	input.focus()
-// 	input.addEventListener("keydown", keyDown)
-// }
-//
-// function keyDown(event) {
-// 	if (event.keyCode === 13) {
-// 		console.log("enter")
-// 		let input = event.target
-// 		input.blur()
-// 		input.type = "submit"
-// 		// const randomColor = Math.floor(Math.random()*16777215).toString(16);
-// 		// input.style.backgroundColor = "#" + randomColor
-// 	}
-// }
+let boxes = []
+let mixer
 
-const park1 = document.getElementById("park-1")
-const park1_Audio = new Audio('audio/park_1.mp3')
-const park2 = document.getElementById("park-2")
-const park2_Audio = new Audio('audio/park_2.mp3')
-const park3 = document.getElementById("park-3")
-const park3_Audio = new Audio('audio/park_3.mp3')
-const park4 = document.getElementById("park-4")
-const park4_Audio = new Audio('audio/park_4.mp3')
+var body = document.getElementById("content");
+var colors = ['lightred', 'lightgreen', 'lightblue', 'lightyellow', 'lightpink', 'lightpurple'];
+var currentIndex = 0;
+setInterval(function () {
+	body.style.backgroundColor = colors[currentIndex];
+	if (!colors[currentIndex]) {
+		currentIndex = 0;
+	} else {
+		currentIndex++;
+	}
+}, 5000);
 
-park1.onclick = () => playAudio(park1_Audio, [park2_Audio, park3_Audio, park4_Audio])
-park2.onclick = () => playAudio(park2_Audio, [park1_Audio, park3_Audio, park4_Audio])
-park3.onclick = () => playAudio(park3_Audio, [park1_Audio, park2_Audio, park4_Audio])
-park4.onclick = () => playAudio(park4_Audio, [park1_Audio, park2_Audio, park3_Audio])
+window.onload = () => {
+	const boxesDOM = document.getElementsByClassName('grid-item')
+	const mixerDOM = document.getElementById('mixer')
 
-function playAudio(player, otherAudios) {
-	if (player.paused) {
-		pauseAll(otherAudios)
-		player.play()
-	} else
-		player.pause()
+	let i = 1
+	for (const boxDOM of boxesDOM) {
+		if (boxDOM.id !== 'mixer') {
+			boxes.push({
+				dom: boxDOM,
+				audio: new Audio('audio/park_' + i + '.mp3'),
+				image: boxDOM.getElementsByClassName('box-image')[0],
+			})
+			i++
+		}
+	}
+
+	boxes.forEach(box => {
+		box.image.onclick = () => {
+			playAudio(box, boxes.filter(b => b !== box))
+		}
+	})
+
+	mixer = {
+		dom: mixerDOM,
+		audio: {
+			box_1: new Audio('audio/park_1.mp3'),
+			box_2: new Audio('audio/park_2.mp3'),
+			box_3: new Audio('audio/park_3.mp3'),
+			box_4: new Audio('audio/park_4.mp3')
+		},
+		slider: mixerDOM.getElementsByClassName('slider')[0]
+	}
 }
 
-function pauseAll(audios) {
-	for (const audio of audios) {
+function playAudio(box) {
+	const player = box.audio
+	const otherBoxes = boxes.filter(b => b !== box)
+	if (player.paused) {
+		pauseAll(otherBoxes)
+		player.play()
+		box.image.style.filter = 'blur(0px)'
+	} else {
+		player.pause()
+		box.image.style.filter = 'blur(5px)'
+	}
+}
+
+function pauseAll(boxes) {
+	for (const boxIdx in boxes) {
+		const box = boxes[boxIdx]
+		const audio = box.audio
+		box.image.style.filter = 'blur(5px)'
 		audio.pause()
 	}
 }
+
+const position = {
+	x: 0, y: 0
+}
+
+// interact('.grid-item').draggable({
+// 	listeners: {
+// 		start (event) {
+// 			console.log(event.type, event.target)
+// 		},
+// 		move (event) {
+// 			position.x += event.dx
+// 			position.y += event.dy
+//
+// 			event.target.style.transform =
+// 				`translate(${position.x}px, ${position.y}px)`
+// 		},
+// 	}
+// })
+//
+// interact('#mixer')
+// 	.dropzone({
+// 		ondrop: function (event) {
+// 			position.x = 0
+// 			position.y = 0
+// 			alert(event.relatedTarget.id
+// 				+ ' was dropped into '
+// 				+ event.target.id)
+// 		}
+// 	})
+// 	.on('dropactivate', function (event) {
+// 		event.target.classList.add('drop-activated')
+// 	})

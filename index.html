@@ -4,13 +4,30 @@
 		<link rel="stylesheet" href="styles.css">
 		<meta charset="UTF-8">
 		<title>edgar website</title>
+		<script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js"></script>
 	</head>
 	<body id="content">
 		<div class="grid-container">
-			<img class="grid-item" src="images/park_1.png" id="park-1">
-			<img class="grid-item" src="images/park_2.png" id="park-2">
-			<img class="grid-item" src="images/park_3.png" id="park-3">
-			<img class="grid-item" src="images/park_4.png" id="park-4">
+			<div class="grid-item" id="box-1">
+				<img class="box-image" src="images/park_1.png">
+				<!--				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="slider" id="box-1-volume">-->
+			</div>
+
+			<div class="grid-item" id="box-2">
+				<img class="box-image" src="images/park_2.png">
+			</div>
+
+			<div class="grid-item" id="mixer">
+				<img class="box-image" src="images/black.png">
+			</div>
+
+			<div class="grid-item" id="box-3">
+				<img class="box-image" src="images/park_3.png">
+			</div>
+
+			<div class="grid-item" id="box-4">
+				<img class="box-image" src="images/park_4.png">
+			</div>
 		</div>
 	</body>
 	<script src="script.js"></script>
