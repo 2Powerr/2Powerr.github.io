@@ -1,82 +1,62 @@
 * {
-    padding: 0;
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
 }
 
-input {
-    position: absolute
+
+/*TODO: rewrite this*/
+.content {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 0 20px;
 }
 
-html,
-body {
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    background-size: cover;
 }
 
-#content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgrey;
-
-    transition: background-color 2s;
-}
-
-.grid-container {
+.video-container video {
+    /*min-width: 100%;*/
+    /*min-height: 100%;*/
+    height: 100%;
+    width: 100%;
     position: absolute;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto;
-    grid-gap: 100px;
-
-    display: grid;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.grid-item {
-    display: block;
-    object-fit: cover;
-    object-position: center;
+.video-overlay {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
+    min-width: 30%;
+    min-height: 30%;
+
+    z-index: 1;
 }
 
-.box-image {
-    filter: blur(5px);
-    transition: filter 1s ease-out;
-    width: 210px;
-    height: 210px;
+.video-overlay:hover .video-controls {
+    opacity: 1;
 }
 
-.grid-item:hover .box-image {
-    filter: blur(0);
-}
+.video-controls {
+    font-size: 100px;
+    opacity: 0;
 
-input[type=range][orient=vertical] {
-    writing-mode: bt-lr;
-    -webkit-appearance: slider-vertical;
-    width: 30px;
-    height: 200px;
-}
-
-#box-1 {
-    grid-column: 1;
-    grid-row: 1;
-}
-
-#box-2 {
-    grid-column: 3;
-    grid-row: 1;
-}
-
-#mixer {
-    grid-column: 2;
-    grid-row: 2;
-}
-
-#box-3 {
-    grid-column: 1;
-    grid-row: 3;
-}
-
-#box-4 {
-    grid-column: 3;
-    grid-row: 3;
+    cursor: pointer;
+    transition: opacity 0.2s ease-out;
 }

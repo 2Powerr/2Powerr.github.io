@@ -1,0 +1,1 @@
+INIT_ANIMATION_FILENAME = 'sample_video.webm'
