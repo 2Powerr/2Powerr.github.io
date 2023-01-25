@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+body {
+    background-color: black;
+}
+
 
 /*TODO: rewrite this*/
 .content {
@@ -49,11 +53,11 @@
     z-index: 1;
 }
 
-.video-overlay:hover .video-controls {
+.video-overlay:hover .video-control {
     opacity: 1;
 }
 
-.video-controls {
+.video-control {
     font-size: 100px;
     opacity: 0;
 

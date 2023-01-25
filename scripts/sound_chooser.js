@@ -1,58 +1,116 @@
-let boxes = []
-let mixer
+let boxes, mixer
+
+class SoundBox {
+	constructor(boxConfig) {
+		this.id = boxConfig.id
+		this.previewImageFilename = boxConfig.previewImageFilename
+		this.previewSoundFilename = boxConfig.previewSoundFilename
+		this.isMoving = false
+
+		this.dom = document.getElementById(boxConfig.id)
+		if (this.dom === null) throw new Error("Sound box '" + this.id + "' not found")
+		this.setupImage()
+		this.setupAudio()
+		this.setupInteract()
+	}
+
+	setupImage() {
+		const images = this.dom.getElementsByClassName('box-image')
+		if (images.length === 0) throw new Error("Sound box '" + this.id + "' has no image element")
+		this.image = images[0]
+		this.image.src = '../images/' + this.previewImageFilename
+		this.image.id = this.id + '-image'
+	}
+
+	setupAudio() {
+		this.audio = new Audio('../audio/' + this.previewSoundFilename)
+		interact(this.dom).on('tap', () => {
+			if (this.audio.paused && !this.isMoving) {
+				this.audio.currentTime = 0
+				this.audio.play()
+			} else {
+				this.audio.pause()
+			}
+		})
+	}
+
+	setupInteract() {
+		let position = {x: 0, y: 0}
+		interact(this.dom).draggable({
+			listeners: {
+				start (event) {
+					position = {x: 0, y: 0}
+				},
+				move (event) {
+					position.x += event.dx
+					position.y += event.dy
+
+					event.target.style.transform =
+						`translate(${position.x}px, ${position.y}px)`
+				},
+				end (event) {
+					event.target.style.transform = 'translate(0px, 0px)'
+				}
+			}
+		})
+	}
+}
+
+class MixerBox {
+	constructor() {
+		this.dom = document.getElementById('mixer')
+		if (this.dom === null) throw new Error("Mixer box not found")
+		this.numOfBoxes = 0
+		this.setupInteract()
+	}
+
+	setupInteract() {
+		interact('#mixer').dropzone({
+			accept: '.grid-item',
+			ondrop: function (event) {
+				const dom = document.getElementById('mixer')
+				event.relatedTarget.style.opacity = '0'
+				const box = boxes.find(box => box.id === event.relatedTarget.id)
+				box.image.classList.remove('box-image')
+				box.image.classList.add('mixer-image')
+				dom.appendChild(box.image)
+				box.image.style.opacity = '1'
+				mixer.numOfBoxes++
+
+				showSubmit()
+
+				interact(box.image).on('tap', (event) => {
+					dom.removeChild(box.image)
+					box.image.classList.remove('mixer-image')
+					box.image.classList.add('box-image')
+					box.dom.appendChild(box.image)
+					box.dom.style.opacity = '1'
+					mixer.numOfBoxes--
+					if (mixer.numOfBoxes === 0) hideSubmit()
+					interact(box.image).unset()
+				})
+			}
+		})
+	}
+}
+
+function showSubmit() {
+	const submit = document.getElementById('submit')
+	submit.style.opacity = '1'
+	submit.style.pointerEvents = 'all'
+	submit.style.cursor = 'pointer'
+}
+
+function hideSubmit() {
+	const submit = document.getElementById('submit')
+	submit.style.opacity = '0'
+	submit.style.pointerEvents = 'none'
+	submit.style.cursor = 'default'
+}
 
 window.onload = () => {
-	const boxesDOM = document.getElementsByClassName('grid-item')
-	const mixerDOM = document.getElementById('mixer')
-
-	let i = 1
-	for (const boxDOM of boxesDOM) {
-		if (boxDOM.id !== 'mixer') {
-			boxes.push({
-				dom: boxDOM,
-				audio: new Audio('../audio/park_' + i + '.mp3'),
-				image: boxDOM.getElementsByClassName('box-image')[0],
-			})
-			i++
-		}
-	}
-
-	boxes.forEach(box => {
-		box.image.onclick = () => {
-			playAudio(box, boxes.filter(b => b !== box))
-		}
-	})
-
-	mixer = {
-		dom: mixerDOM,
-		audio: {
-			box_1: new Audio('../audio/park_1.mp3'),
-			box_2: new Audio('../audio/park_2.mp3'),
-			box_3: new Audio('../audio/park_3.mp3'),
-			box_4: new Audio('../audio/park_4.mp3')
-		},
-		slider: mixerDOM.getElementsByClassName('slider')[0]
-	}
-}
-
-function playAudio(box) {
-	const player = box.audio
-	const otherBoxes = boxes.filter(b => b !== box)
-	if (player.paused) {
-		pauseAll(otherBoxes)
-		player.play()
-		box.image.style.filter = 'blur(0px)'
-	} else {
-		player.pause()
-		box.image.style.filter = 'blur(5px)'
-	}
-}
-
-function pauseAll(boxes) {
-	for (const boxIdx in boxes) {
-		const box = boxes[boxIdx]
-		const audio = box.audio
-		box.image.style.filter = 'blur(5px)'
-		audio.pause()
-	}
+	const submit = document.getElementById('submit')
+	submit.onclick = () => document.location.href = '../pages/sound_walk.html'
+	boxes = SOUND_BOXES.map(boxConfig => new SoundBox(boxConfig))
+	mixer = new MixerBox()
 }

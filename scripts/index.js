@@ -1,10 +1,11 @@
 function setupVideoControls() {
+	console.log('video controls setup')
 	let firstVideoLoad = true
 	const videoElement = document.getElementById('animation-video')
 	const restartVideoControl = document.getElementById('restart-video')
 	const togglePlayVideoControl = document.getElementById('toggle-play-video')
-	const skipVideoControl = document.getElementById('skip-video')
 
+	const skipVideoControl = document.getElementById('skip-video')
 	restartVideoControl.onclick = () => {
 		videoElement.currentTime = 0
 	}
@@ -24,7 +25,21 @@ function setupVideoControls() {
 	}
 
 	skipVideoControl.onclick = () => {
+		videoElement.currentTime = videoElement.duration
+	}
+
+	videoElement.onended = () => {
 		document.location.href = 'pages/sound_chooser.html'
+	}
+
+	if (videoElement.paused) {
+		console.log('video paused')
+		togglePlayVideoControl.classList.remove('bi-pause')
+		togglePlayVideoControl.classList.add('bi-play')
+	} else {
+		console.log('video playing')
+		togglePlayVideoControl.classList.remove('bi-play')
+		togglePlayVideoControl.classList.add('bi-pause')
 	}
 }
 
@@ -32,37 +47,4 @@ window.onload = () => {
 	setupVideoControls()
 }
 
-
-
-const position = {
-	x: 0, y: 0
-}
-
-// interact('.grid-item').draggable({
-// 	listeners: {
-// 		start (event) {
-// 			console.log(event.type, event.target)
-// 		},
-// 		move (event) {
-// 			position.x += event.dx
-// 			position.y += event.dy
-//
-// 			event.target.style.transform =
-// 				`translate(${position.x}px, ${position.y}px)`
-// 		},
-// 	}
-// })
-//
-// interact('#mixer')
-// 	.dropzone({
-// 		ondrop: function (event) {
-// 			position.x = 0
-// 			position.y = 0
-// 			alert(event.relatedTarget.id
-// 				+ ' was dropped into '
-// 				+ event.target.id)
-// 		}
-// 	})
-// 	.on('dropactivate', function (event) {
-// 		event.target.classList.add('drop-activated')
-// 	})
+window.onunload = () => {}
