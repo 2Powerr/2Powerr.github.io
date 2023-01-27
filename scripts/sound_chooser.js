@@ -5,7 +5,9 @@ class SoundBox {
 		this.id = boxConfig.id
 		this.previewImageFilename = boxConfig.previewImageFilename
 		this.previewSoundFilename = boxConfig.previewSoundFilename
+		this.soundFilename = boxConfig.soundFilename
 		this.isMoving = false
+		this.isSelected = false
 
 		this.dom = document.getElementById(boxConfig.id)
 		if (this.dom === null) throw new Error("Sound box '" + this.id + "' not found")
@@ -76,11 +78,13 @@ class MixerBox {
 				dom.appendChild(box.image)
 				box.image.style.opacity = '1'
 				mixer.numOfBoxes++
+				box.isSelected = true
 
 				showSubmit()
 
 				interact(box.image).on('tap', (event) => {
 					dom.removeChild(box.image)
+					box.isSelected = false
 					box.image.classList.remove('mixer-image')
 					box.image.classList.add('box-image')
 					box.dom.appendChild(box.image)
@@ -109,8 +113,23 @@ function hideSubmit() {
 }
 
 window.onload = () => {
-	const submit = document.getElementById('submit')
-	submit.onclick = () => document.location.href = '../pages/sound_walk.html'
+	document.getElementById('submit').onclick = submit
 	boxes = SOUND_BOXES.map(boxConfig => new SoundBox(boxConfig))
 	mixer = new MixerBox()
+}
+
+function submit() {
+
+	const selectedBoxes = boxes.filter(box => box.isSelected)
+
+	const selectedBoxesSessionObj = selectedBoxes.map(box => {
+		return {
+			id: box.id,
+			previewImageFilename: box.previewImageFilename,
+			audioFilename: box.soundFilename
+		}
+	})
+
+	sessionStorage.setItem("selectedBoxes", JSON.stringify(selectedBoxesSessionObj))
+	document.location.href = '../pages/sound_walk.html'
 }

@@ -2,9 +2,44 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Title</title>
+		<title>Walking Sounds - Sound walk</title>
+		<link rel="stylesheet" href="../styles/sound_walk.css">
+		<script src="../lib/p5.js"></script>
+		<script src="../lib/p5.sound.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js"></script>
 	</head>
-	<body>
-
+	<body id="content">
+		<section id="sound-header">
+			<div class="sound-node">
+				<p>som 1</p>
+				<div></div>
+			</div>
+			<div class="sound-node">
+				<p>som 1</p>
+				<div></div>
+			</div>
+		</section>
+		<section id="sound-volume-control">
+			<div class="volume-control-container">
+				<img class="volume-control-image">
+				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+			</div>
+			<div class="volume-control-container">
+				<img class="volume-control-image">
+				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+			</div>
+			<div class="volume-control-container">
+				<img class="volume-control-image">
+				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+			</div>
+			<div class="volume-control-container">
+				<img class="volume-control-image">
+				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+			</div>
+		</section>
+		<main id="sound-walk">
+		</main>
 	</body>
+	<script src="../config.js"></script>
+	<script src="../scripts/sound_walk.js"></script>
 </html>

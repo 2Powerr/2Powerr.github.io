@@ -36,6 +36,7 @@ body {
 .box-image {
     width: 210px;
     height: 210px;
+    border-radius: 100%;
 }
 
 input[type=range][orient=vertical] {
