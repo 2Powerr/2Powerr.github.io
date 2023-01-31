@@ -1,7 +1,7 @@
 function setupVideoControls() {
-	console.log('video controls setup')
 	let firstVideoLoad = true
 	const videoElement = document.getElementById('animation-video')
+	videoElement.src = '../video/' + INIT_ANIMATION_FILENAME
 	const restartVideoControl = document.getElementById('restart-video')
 	const togglePlayVideoControl = document.getElementById('toggle-play-video')
 
