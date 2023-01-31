@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<link rel="stylesheet" href="../sound_chooser.css">
+		<link rel="stylesheet" href="../styles/sound_chooser.css">
 		<meta charset="UTF-8">
 		<title>Walking Sounds - Sound chooser</title>
 		<script src="https://cdn.jsdelivr.net/npm/interactjs@1.10.17/dist/interact.min.js"></script>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 	</head>
 	<body id="content">
-		<div class="grid-container">
-			<div class="grid-item" id="box-1">
-				<img class="box-image">
+		<section id="mixer">
+			<div id="mixer-background">
 			</div>
-
-			<div class="grid-item" id="box-2">
-				<img class="box-image">
+			<button id="submit-button" disabled>
+				<i class="bi bi-play"></i>
+			</button>
+		</section>
+		<section id="sound-box-container">
+			<div class="sound-box" id="box-1">
+				<img class="sound-box-image">
+				<div class="sound-box-overlay">
+					<p class="sound-box-description"></p>
+				</div>
 			</div>
-
-			<div class="grid-item" id="mixer">
+			<div class="sound-box" id="box-2">
+				<img class="sound-box-image">
+				<div class="sound-box-overlay">
+					<p class="sound-box-description"></p>
+				</div>
 			</div>
-
-			<i id="submit" class="bi bi-arrow-right"></i>
-
-			<div class="grid-item" id="box-3">
-				<img class="box-image">
+			<div class="sound-box" id="box-3">
+				<img class="sound-box-image">
+				<div class="sound-box-overlay">
+					<p class="sound-box-description"></p>
+				</div>
 			</div>
-
-			<div class="grid-item" id="box-4">
-				<img class="box-image">
+			<div class="sound-box" id="box-4">
+				<img class="sound-box-image">
+				<div class="sound-box-overlay">
+					<p class="sound-box-description"></p>
+				</div>
 			</div>
-		</div>
+		</section>
+
+<!--		<i id="submit" class="bi bi-arrow-right"></i>-->
+<!--		<div class="grid-container">-->
 	</body>
 	<script src="../scripts/sound_chooser.js"></script>
 	<script src="../config.js"></script>

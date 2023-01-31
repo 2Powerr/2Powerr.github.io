@@ -6,6 +6,7 @@ class SoundBox {
 		this.previewImageFilename = boxConfig.previewImageFilename
 		this.previewSoundFilename = boxConfig.previewSoundFilename
 		this.soundFilename = boxConfig.soundFilename
+		this.descriptionText = boxConfig.description
 		this.isMoving = false
 		this.isSelected = false
 
@@ -14,10 +15,36 @@ class SoundBox {
 		this.setupImage()
 		this.setupAudio()
 		this.setupInteract()
+		this.setupDescription()
+	}
+
+	setFloatingAnimationState(state) {
+		const floatingAnimationFunction = () => {
+			const limit = 5
+			const x = Math.random() * limit * 2 - limit
+			const y = Math.random() * limit * 2 - limit
+			this.dom.style.transform = String('translate(' + x + '%, ' + y + '%)')
+		}
+		if (state) {
+			floatingAnimationFunction()
+			this.floatingAnimationID = setInterval(() => {
+				floatingAnimationFunction()
+			}, 5000)
+		} else {
+			clearInterval(this.floatingAnimationID)
+			this.dom.style.transform = 'translate(0, 0)'
+		}
+	}
+
+	setupDescription() {
+		const description = this.dom.getElementsByClassName('sound-box-description')
+		if (description.length === 0) throw new Error("Sound box '" + this.id + "'has no description element")
+		this.description = description[0]
+		this.description.innerText = this.descriptionText
 	}
 
 	setupImage() {
-		const images = this.dom.getElementsByClassName('box-image')
+		const images = this.dom.getElementsByTagName('img')
 		if (images.length === 0) throw new Error("Sound box '" + this.id + "' has no image element")
 		this.image = images[0]
 		this.image.src = '../images/' + this.previewImageFilename
@@ -41,6 +68,7 @@ class SoundBox {
 		interact(this.dom).draggable({
 			listeners: {
 				start (event) {
+					event.target.classList.add('no-transition')
 					position = {x: 0, y: 0}
 				},
 				move (event) {
@@ -68,31 +96,45 @@ class MixerBox {
 
 	setupInteract() {
 		interact('#mixer').dropzone({
-			accept: '.grid-item',
+			accept: '.sound-box',
 			ondrop: function (event) {
-				const dom = document.getElementById('mixer')
-				event.relatedTarget.style.opacity = '0'
 				const box = boxes.find(box => box.id === event.relatedTarget.id)
-				box.image.classList.remove('box-image')
-				box.image.classList.add('mixer-image')
-				dom.appendChild(box.image)
-				box.image.style.opacity = '1'
-				mixer.numOfBoxes++
+
+				const divContainer = document.createElement('div')
+				divContainer.classList.add('mixer-background-item')
+				const img = document.createElement('img')
+				img.src = '../images/' + box.previewImageFilename
+
+				const overlay = document.createElement('div')
+				overlay.classList.add('sound-box-overlay')
+				const overlayDescription = document.createElement('p')
+				overlayDescription.classList.add('sound-box-description')
+				overlayDescription.innerText = box.descriptionText
+
+				overlay.appendChild(overlayDescription)
+
+				divContainer.appendChild(img)
+				divContainer.appendChild(overlay)
+
+				box.dom.style.visibility = 'hidden'
+
+				const mixerContainer = document.getElementById('mixer-background')
+				mixerContainer.appendChild(divContainer)
+
+				const submitButton = document.getElementById('submit-button')
+				submitButton.disabled = false
 				box.isSelected = true
 
-				showSubmit()
+				divContainer.onclick = () => {
+					box.dom.style.visibility = 'visible'
+					mixerContainer.removeChild(divContainer)
 
-				interact(box.image).on('tap', (event) => {
-					dom.removeChild(box.image)
+					if (mixerContainer.children.length === 0) {
+						submitButton.disabled = true
+					}
+
 					box.isSelected = false
-					box.image.classList.remove('mixer-image')
-					box.image.classList.add('box-image')
-					box.dom.appendChild(box.image)
-					box.dom.style.opacity = '1'
-					mixer.numOfBoxes--
-					if (mixer.numOfBoxes === 0) hideSubmit()
-					interact(box.image).unset()
-				})
+				}
 			}
 		})
 	}
@@ -113,9 +155,12 @@ function hideSubmit() {
 }
 
 window.onload = () => {
-	document.getElementById('submit').onclick = submit
+	// document.getElementById('submit').onclick = submit
 	boxes = SOUND_BOXES.map(boxConfig => new SoundBox(boxConfig))
 	mixer = new MixerBox()
+	document.getElementById('submit-button').addEventListener('click', () => {
+		submit()
+	})
 }
 
 function submit() {
