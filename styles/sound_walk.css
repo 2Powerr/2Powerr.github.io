@@ -71,11 +71,24 @@ input[type=range][orient=vertical]
     color: black;
 }
 
+.artificial-sound {
+    background-color: blue;
+}
+
+.natural-sound {
+    background-color: green;
+}
+
+.mechanical-sound {
+    background-color: red;
+}
+
 #sound-nodes {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    padding-right: 12px;
 
     flex: 1;
     height: 100%;
@@ -90,6 +103,7 @@ input[type=range][orient=vertical]
 }
 
 .sound-node-text {
+    font-weight: bold;
     text-align: center;
     margin-bottom: 10px;
     color: white;
@@ -98,6 +112,17 @@ input[type=range][orient=vertical]
 .sound-node-description {
     color: white;
     text-align: center;
+}
+
+.sound-walk-image-container {
+    position: absolute;
+
+    /*height: 100%;*/
+
+    top: 51%;
+    left: 51%;
+
+    transform: translate(-50%, -50%);
 }
 
 .sound-node-circle-container {
@@ -114,11 +139,10 @@ input[type=range][orient=vertical]
     left: 50%;
     transform: translate(-50%, -50%);
     display: inline;
-    border: solid white;
-    background-color: red;
+    border: 1px solid white;
     border-radius: 100%;
-    height: 25px;
-    width: 25px;
+    height: 15px;
+    width: 15px;
 }
 
 .draggable {}
