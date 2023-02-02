@@ -5,23 +5,29 @@ var particles = []
 var img
 
 window.onload = () => {
-	const soundWalkContainer = document.getElementById('sound-walk')
+	const soundWalk = document.getElementById('sound-walk')
 
-	const soundNodes = document.getElementsByClassName('sound-node')
 
-	soundNodes.forEach(node => {
-		let position = {x: 0, y: 0}
-		interact(node).draggable({
-			listeners: {
-				move (event) {
-					position.x += event.dx
-					position.y += event.dy
+	const soundNodes = document.getElementById('sound-nodes')
 
-					event.target.style.transform =
-						`translate(${position.x}px, ${position.y}px)`
-				}
-			}
-		})
+	let position = {x: 0, y: 0}
+
+	const nodeInteractable = interact('.sound-node-circle.draggable')
+	nodeInteractable.draggable({
+		onstart: (event) => {
+			const rect = interact.getElementRect(event.target)
+
+			position.x = rect.left + rect.width / 2
+			position.y = rect.top + rect.height / 2
+		},
+		onmove: (event) => {
+			const target = event.target
+			const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+			const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+			target.style.webKitTransform = target.style.transform = `translate(${x}px, ${y}px)`
+			target.setAttribute('data-x', x)
+			target.setAttribute('data-y', y)
+		}
 	})
 }
 
@@ -110,7 +116,7 @@ function preload() {
 }
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
+	createCanvas(windowWidth / 2, windowHeight / 2);
 	angleMode(DEGREES)
 	imageMode(CENTER)
 	rectMode(CENTER)
@@ -123,7 +129,7 @@ function draw() {
 
 	background(255)
 
-
+	const soundWalk = document.getElementById('sound-walk-container')
 	translate(width/2, height/2)
 
 	fft.analyze()

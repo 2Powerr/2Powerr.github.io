@@ -1,4 +1,4 @@
-const INIT_ANIMATION_FILENAME = 'sample_video.webm.webm'
+const INIT_ANIMATION_FILENAME = 'init_animation.webm'
 
 const SOUND_BOXES = [
 	{
@@ -29,4 +29,8 @@ const SOUND_BOXES = [
 		soundFilename: 'preview_box_4.wav',
 		previewImageFilename: 'box_4_small.jpg'
 	},
+]
+
+const SOUND_CATEGORIES = [
+
 ]

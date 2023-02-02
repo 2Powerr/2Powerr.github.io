@@ -9,54 +9,32 @@ html {
 }
 
 #content {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-}
-
-#sound-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-around;
-
-    min-width: 100%;
-    height: 100px;
-    padding-left: 200px;
-
-    /*background-color: darkolivegreen;*/
 }
 
 #sound-volume-control {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+    flex: 1;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-
-    padding-top: 150px;
-    padding-bottom: 5%;
-
-    min-height: 100%;
-    width: 200px;
 
     /*background-color: cornflowerblue;*/
 }
 
 .volume-control-container {
-    /*background-color: black;*/
+    display: inline-block;
 
-    height: 100px;
-    width: 80%;
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
 }
 
 .volume-control-image {
@@ -76,18 +54,9 @@ input[type=range][orient=vertical]
     height: 100%;
 }
 
-#sound-walk {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
-    overflow: hidden;
-
-    min-height: 100%;
-    min-width: 100%;
-    transform: translate(-50%, -50%);
-    /*padding-left: 200px;*/
-    /*padding-top: 100px;*/
+#sound-walk-container {
+    flex: 3;
+    height: 100%;
 
     display: flex;
     justify-content: center;
@@ -96,20 +65,43 @@ input[type=range][orient=vertical]
     /*background-color: pink;*/
 }
 
+#sound-nodes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    flex: 1;
+    height: 100%;
+
+    /*background-color: darkseagreen;*/
+}
+
 .sound-node {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50px;
-    height: 50px;
 }
 
-.sound-node p {
+.sound-node-text {
     text-align: center;
     margin-bottom: 10px;
 }
 
-.sound-node div {
+.sound-node-circle-container {
+    position: relative;
+
+    height: 50px;
+
+    /*height: 100%;*/
+}
+
+.sound-node-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline;
     border: solid black;
     background-color: red;
     border-radius: 100%;
@@ -117,3 +109,4 @@ input[type=range][orient=vertical]
     width: 25px;
 }
 
+.draggable {}

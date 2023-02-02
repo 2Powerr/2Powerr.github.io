@@ -9,36 +9,61 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/addons/p5.sound.js" integrity="sha512-TU9AWtV5uUZPX8dbBAH8NQF1tSdigPRRT82vllAQ1Ke28puiqLA6ZVKxtUGlgrH6yWFnkKy+sE6luNEGH9ar0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	</head>
 	<body id="content">
-		<section id="sound-header">
+		<div id="sound-volume-control">
+			<div class="volume-control-container">
+					<img class="volume-control-image" src="../images/box_1_small.jpg">
+					<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+				</div>
+				<div class="volume-control-container">
+					<img class="volume-control-image">
+					<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+				</div>
+				<div class="volume-control-container">
+					<img class="volume-control-image">
+					<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+				</div>
+				<div class="volume-control-container">
+					<img class="volume-control-image">
+					<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
+				</div>
+		</div>
+		<div id="sound-walk-container">
+			<main id="sound-walk"></main>
+		</div>
+		<div id="sound-nodes">
 			<div class="sound-node">
-				<p>som 1</p>
-				<div></div>
+				<p class="sound-node-text">som mecânico</p>
+				<div class="sound-node-circle-container">
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+				</div>
+				<div class="sound-node-description">descrição dos sons mecanicos</div>
 			</div>
 			<div class="sound-node">
-				<p>som 1</p>
-				<div></div>
+				<p class="sound-node-text">som natural</p>
+				<div class="sound-node-circle-container">
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+					<div class="sound-node-circle draggable"></div>
+				</div>
+				<div class="sound-node-description">descrição dos sons naturais</div>
 			</div>
-		</section>
-		<section id="sound-volume-control">
-			<div class="volume-control-container">
-				<img class="volume-control-image">
-				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
-			</div>
-			<div class="volume-control-container">
-				<img class="volume-control-image">
-				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
-			</div>
-			<div class="volume-control-container">
-				<img class="volume-control-image">
-				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
-			</div>
-			<div class="volume-control-container">
-				<img class="volume-control-image">
-				<input type="range" min="0" max="1" value="0.5" step="0.01" orient="vertical" class="volume-control-slider">
-			</div>
-		</section>
-		<main id="sound-walk">
-		</main>
+		</div>
 	</body>
 	<script src="../config.js"></script>
 	<script src="../scripts/sound_walk.js"></script>
