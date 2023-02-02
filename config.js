@@ -3,7 +3,7 @@ const INIT_ANIMATION_FILENAME = 'sample_video.webm.webm'
 const SOUND_BOXES = [
 	{
 		id: 'box-1',
-		description: 'Description of box 1.',
+		description: 'Café<br><br>Pessoas<br>Musica.',
 		previewSoundFilename: 'preview_box_1.wav',
 		soundFilename: 'preview_box_1.wav',
 		previewImageFilename: 'box_1_small.jpg'
