@@ -125,11 +125,14 @@ class MixerBox {
 				submitButton.disabled = false
 				box.isSelected = true
 
+				document.getElementById('mixer-description').style.visibility = 'hidden'
+
 				divContainer.onclick = () => {
 					box.dom.style.visibility = 'visible'
 					mixerContainer.removeChild(divContainer)
 
 					if (mixerContainer.children.length === 0) {
+						document.getElementById('mixer-description').style.visibility = 'visible'
 						submitButton.disabled = true
 					}
 

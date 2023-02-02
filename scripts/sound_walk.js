@@ -116,18 +116,21 @@ function preload() {
 }
 
 function setup() {
+
 	createCanvas(windowWidth / 2, windowHeight / 2);
+
 	angleMode(DEGREES)
-	imageMode(CENTER)
-	rectMode(CENTER)
+	// imageMode(CENTER)
+	// rectMode(CENTER)
 	fft = new p5.FFT(0.8, 512)
 	// img.filter(BLUR, 1)
+	background(0)
 	noLoop()
 }
 
 function draw() {
 
-	background(255)
+	background(0)
 
 	const soundWalk = document.getElementById('sound-walk-container')
 	translate(width/2, height/2)
@@ -135,19 +138,19 @@ function draw() {
 	fft.analyze()
 	amp = fft.getEnergy(20, 200)
 
-	push()
-	if(amp>230) {
-		rotate(random(-1, 1))
-	}
-	// image(img, 0, 0, width + 100, height + 100)
-	pop()
+	// push()
+	// if(amp>230) {
+	// 	rotate(random(-1, 1))
+	// }
+	// // image(img, 0, 0, width + 100, height + 100)
+	// pop()
 
 	// var alpha = map(amp, 0, 255, 100, 150)
 	// fill(20, alpha)
 	noStroke()
-	rect(0, 0, width, height)
+	// rect(0, 0, width, height)
 
-	stroke(0)     // stroke color of ring
+	stroke(255)     // stroke color of ring
 	// stroke(220, 107, 255)
 	strokeWeight(3)
 	noFill()
