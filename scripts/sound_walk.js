@@ -4,6 +4,9 @@ var fft
 var particles = []
 var img
 
+/**
+ *
+ */
 window.onload = () => {
 	const soundWalk = document.getElementById('sound-walk')
 
@@ -31,6 +34,10 @@ window.onload = () => {
 	})
 }
 
+/**
+ * Class which represents each audio control container in left side nav.
+ * Each control has the preview image and a slider to control the sound walk volume.
+ */
 class AudioControl {
 	constructor(containerDOM, sessionBoxConfig) {
 		this.dom = containerDOM
@@ -72,6 +79,9 @@ class AudioControl {
 
 const audioControls = []
 
+/**
+ * Sound box loader into AudioControl's using browser session storage.
+ */
 function setupBoxes() {
 	const selectedBoxes = JSON.parse(sessionStorage.getItem("selectedBoxes"))
 	const volumeControlContainer = document.getElementsByClassName('volume-control-container')
@@ -91,6 +101,10 @@ let audio2
 let audio3
 let audio4
 
+
+/**
+ * Setup of audios in sound walk and image in center.
+ */
 function preload() {
 
 	setupBoxes()
@@ -115,6 +129,9 @@ function preload() {
 	// img = loadImage("https://images.unsplash.com/photo-1459749411175-04bf5292ceea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80")
 }
 
+/**
+ * Ring animation setup
+ */
 function setup() {
 
 	createCanvas(windowWidth / 2, windowHeight / 2);
@@ -128,6 +145,9 @@ function setup() {
 	noLoop()
 }
 
+/**
+ * Ring animation draw method
+ */
 function draw() {
 
 	background(0)

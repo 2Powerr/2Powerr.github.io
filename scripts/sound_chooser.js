@@ -1,5 +1,17 @@
 let boxes, mixer
 
+/**
+ * Sound box class representing each clickable and draggable box
+ *
+ * Each sound box has:
+ * - Preview image
+ * - Preview sound
+ * - Description text
+ *
+ * Each sound box can:
+ * - Be clicked to produce the 'preview sound'
+ * - Be dragged into the 'mixer'
+ */
 class SoundBox {
 	constructor(boxConfig) {
 		this.id = boxConfig.id
@@ -16,24 +28,6 @@ class SoundBox {
 		this.setupAudio()
 		this.setupInteract()
 		this.setupDescription()
-	}
-
-	setFloatingAnimationState(state) {
-		const floatingAnimationFunction = () => {
-			const limit = 5
-			const x = Math.random() * limit * 2 - limit
-			const y = Math.random() * limit * 2 - limit
-			this.dom.style.transform = String('translate(' + x + '%, ' + y + '%)')
-		}
-		if (state) {
-			floatingAnimationFunction()
-			this.floatingAnimationID = setInterval(() => {
-				floatingAnimationFunction()
-			}, 5000)
-		} else {
-			clearInterval(this.floatingAnimationID)
-			this.dom.style.transform = 'translate(0, 0)'
-		}
 	}
 
 	setupDescription() {
@@ -86,6 +80,13 @@ class SoundBox {
 	}
 }
 
+/**
+ * Mixer class representing the middle section of the Sound Chooser page.
+ *
+ * The mixer can receive any number of Sound Boxes inside.
+ * On receiving each sound box, fill the available space with its preview image.
+ * When there are 1 or more sound boxes in mixer, allow user to go to next page (Sound Walk page).
+ */
 class MixerBox {
 	constructor() {
 		this.dom = document.getElementById('mixer')
@@ -143,22 +144,7 @@ class MixerBox {
 	}
 }
 
-function showSubmit() {
-	const submit = document.getElementById('submit')
-	submit.style.opacity = '1'
-	submit.style.pointerEvents = 'all'
-	submit.style.cursor = 'pointer'
-}
-
-function hideSubmit() {
-	const submit = document.getElementById('submit')
-	submit.style.opacity = '0'
-	submit.style.pointerEvents = 'none'
-	submit.style.cursor = 'default'
-}
-
 window.onload = () => {
-	// document.getElementById('submit').onclick = submit
 	boxes = SOUND_BOXES.map(boxConfig => new SoundBox(boxConfig))
 	mixer = new MixerBox()
 	document.getElementById('submit-button').addEventListener('click', () => {
@@ -166,6 +152,9 @@ window.onload = () => {
 	})
 }
 
+/**
+ * Submits the selected sound boxes to the next page (Sound Walk page)
+ */
 function submit() {
 
 	const selectedBoxes = boxes.filter(box => box.isSelected)

@@ -1,11 +1,22 @@
+/**
+ * Setup HTML elements with JavaScript
+ * This functions is ran when Window loads (onload function)
+ * This function does the following:
+| * Name                    | ID                | Description                                                |
+| * Initial animation video | animation-video   | setting video source                                       |
+| * Restart button          | restart-video     | When user clicks, restart video playback                   |
+| * Play/pause button       | toggle-play-video | When user clicks, pause video. If it's playing, unpause it |
+| * Next button             | skip-video        | When user click on it, go to next page                     |
+ */
 function setupVideoControls() {
 	let firstVideoLoad = true
 	const videoElement = document.getElementById('animation-video')
-	videoElement.src = '../video/' + INIT_ANIMATION_FILENAME
 	const restartVideoControl = document.getElementById('restart-video')
 	const togglePlayVideoControl = document.getElementById('toggle-play-video')
-
 	const skipVideoControl = document.getElementById('skip-video')
+
+	videoElement.src = '../video/' + INIT_ANIMATION_FILENAME
+
 	restartVideoControl.onclick = () => {
 		videoElement.currentTime = 0
 	}
@@ -47,4 +58,5 @@ window.onload = () => {
 	setupVideoControls()
 }
 
+// Do not keep cache values
 window.onunload = () => {}
